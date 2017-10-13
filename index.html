@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Trivia Game</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+	<div class="background">
+		<h1>Test your IQ!!</h1>
+
+	<div id="display">
+		<h2>Time remaining:</h2>
+		<h2 id="show-number"></h2>
+	</div>
+
+	<div><h3>What shape is a Tomato?</h3></div>
+	<br>
+		<td class="num1">
+	      <input type="radio" name="q1" value="1">&nbsp;Round&nbsp;&nbsp;&nbsp;
+		  <input type="radio" name="q1" value="2">&nbsp;Square
+		</td>
+		<br>
+		<br>
+		<div class="answers" class="answers" id="ans1"></div>
+
+
+	<div><h3>Which number should come next in the series?1 - 1 - 2 - 3 - 5 - 8 - 13</h3></div>
+	<br>
+		<td class="copyA3">
+			<input type="radio" name="q2" value="1">&nbsp;8&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q2" value="2">&nbsp;13&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q2" value="3">&nbsp;21&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q2" value="4">&nbsp;26&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q2" value="5">&nbsp;31
+		</td>
+		<br>
+		<br>
+		<div class="answers" id="ans2"></div>
+
+
+
+	<div><h3>Mary, who is sixteen years old, is four times as old as her brother. How old will Mary be when she is twice as old as her brother?</h3></div>
+	<br>
+		<td class="copyA3">
+			<input type="radio" name="q3" value="1">&nbsp;20&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q3" value="2">&nbsp;24&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q3" value="3">&nbsp;25&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q3" value="4">&nbsp;26&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q3" value="5">&nbsp;28
+		</td>
+		<br>
+		<br>
+		<div class="answers" id="ans3"></div>
+
+		<div><h3>Which one of the numbers does not belong in the following series? 2 - 3 - 6 - 7 - 8 - 14 - 15 - 30</h3></div>
+	<br>
+		<td class="copyA3">
+			<input type="radio" name="q4" value="1">&nbsp;3&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q4" value="2">&nbsp;7&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q4" value="3">&nbsp;8&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q4" value="4">&nbsp;15&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="q4" value="5">&nbsp;30
+		</td>
+		<br>
+		<br>
+		<div class="answers" id="ans4"></div>
+		<br>
+		<hr>
+		<button id="submit">Submit</button>
+
+	</div>
+
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var number = 60;
+
+	    //  Variable that will hold our interval ID when we execute
+	    //  the "run" function
+	    var intervalId;
+		
+		function startgame(){
+		  alert("Let the GAMES Begin!! you have 60 Seconds");
+		  run();
+
+		}
+
+	    function checkans() {
+	      //  Clears our intervalId
+	      //  We just pass the name of the interval
+	      //  to the clearInterval function.
+	      clearInterval(intervalId);
+
+	      var selValue1 = $('input[name=q1]:checked').val();
+		  console.log(selValue1);
+		  if (selValue1 == 1) {
+		  	$('#ans1').html('Correct');
+		  	alert('Congratulations, at the very least, you know tomatoes are round!!!!')
+		  } else {
+		  $('#ans1').html('Incorrect, tomatoes tend to be round!') 	
+		  }
+
+	      var selValue2 = $('input[name=q2]:checked').val();
+		  console.log(selValue2);
+		  if (selValue2 == 3) {
+		  	$('#ans2').html('Correct')
+		  } else {
+		  $('#ans2').html('Incorrect, 13+8=21, and tomatoes tend to be round!') 	
+		  }
+	      var selValue3 = $('input[name=q3]:checked').val();
+		  console.log(selValue3);
+		  if (selValue3 == 2) {
+		  	$('#ans3').html('Correct')
+		  } else {
+		  $('#ans3').html('incorrect, mary is 12 years older than het brother, so she would be 24 when he is 12, and still tomatoes are round!') 	
+		  }
+	      var selValue4 = $('input[name=q4]:checked').val();
+		  console.log(selValue4);
+		  if (selValue4 == 3) {
+		  	$('#ans4').html('Correct')
+		  } else {
+		  $('#ans4').html('incorrect, 3x2=6 then comes 7, 7x2=14, then comes 15, 15x2=30... 8 should not be in the Series.... and tomatoes, yep... they be round!') 	
+		  }
+    	}
+
+    	$('#submit').on('click', checkans);
+    	//set a 2 second delay to inform the user the game is about to start//
+		setTimeout(startgame, 2000);
+
+	    //  When the stop button gets clicked, run the stop function.
+	    $("#stop").on("click", stop);
+
+	    //  When the resume button gets clicked, execute the run function.
+	    $("#resume").on("click", run);
+
+	    //  The run function sets an interval
+	    //  that runs the decrement function once a second.
+	    function run() {
+	      intervalId = setInterval(decrement, 1000);
+	    }
+
+	    //  The decrement function.
+	    function decrement() {
+
+	      //  Decrease number by one.
+	      number--;
+
+	      //  Show the number in the #show-number tag.
+	      $("#show-number").html("<h2>" + number + "</h2>");
+
+
+	      //  Once number hits zero...
+	      if (number === 0) {
+
+	        //  ...run the stop function.
+	        checkans();
+
+	        //  Alert the user that time is up.
+	        alert("Your Time Is Up! Lets See How you did!");    
+	      }
+	    }
+		
+
+
+/*	    function checkq1() {
+	    	if () {}
+	    }*/
+
+
+
+
+
+
+	});
+</script>
+</body>
+</html>
